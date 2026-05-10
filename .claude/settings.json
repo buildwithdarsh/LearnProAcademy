@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test -f \"/Users/alex/Dev/Personal/Darsh Gupta/LearnProAcademy/src/app/student/$dir\")",
+      "Bash(git merge:*)",
+      "Bash(npx --yes tsc --noEmit --project /Users/alex/Dev/Personal/Darsh Gupta/LearnProAcademy/tsconfig.json)",
+      "WebFetch(domain:niflenglish.com)"
+    ]
+  }
+}

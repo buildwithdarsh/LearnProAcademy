@@ -1,0 +1,881 @@
+// ============================================================
+// LearnPro Academy — Comprehensive Mock Data
+// Realistic, domain-accurate data for Indian coaching industry
+// ============================================================
+
+// ---- TYPES ----
+
+export interface Institute {
+  id: string;
+  name: string;
+  slug: string;
+  tagline: string;
+  description: string;
+  logo: string;
+  coverImage: string;
+  rating: number;
+  reviewCount: number;
+  location: { city: string; area: string; state: string; lat: number; lng: number };
+  exams: string[];
+  established: number;
+  studentCount: number;
+  facultyCount: number;
+  branchCount: number;
+  passRate: number;
+  topperCount: number;
+  feeRange: { min: number; max: number };
+  features: string[];
+  images: string[];
+  verified: boolean;
+  trending: boolean;
+}
+
+export interface Course {
+  id: string;
+  instituteId: string;
+  instituteName: string;
+  name: string;
+  exam: string;
+  description: string;
+  duration: string;
+  mode: "Online" | "Offline" | "Hybrid";
+  subjects: string[];
+  feeTotal: number;
+  feeMonthly: number;
+  batchOptions: BatchOption[];
+  syllabus: SyllabusChapter[];
+  features: string[];
+  rating: number;
+  enrolledCount: number;
+  image: string;
+  sampleLectureUrl: string;
+  startDate: string;
+  isCrashCourse: boolean;
+}
+
+export interface BatchOption {
+  id: string;
+  name: string;
+  timing: string;
+  days: string;
+  seatsTotal: number;
+  seatsFilled: number;
+  startDate: string;
+  faculty: string[];
+}
+
+export interface SyllabusChapter {
+  id: string;
+  subject: string;
+  chapter: string;
+  lectures: number;
+  completed: number;
+  testScheduled: boolean;
+}
+
+export interface Faculty {
+  id: string;
+  name: string;
+  avatar: string;
+  subject: string;
+  qualification: string;
+  experience: number;
+  rating: number;
+  studentsCount: number;
+  specialization: string;
+  bio: string;
+}
+
+export interface Student {
+  id: string;
+  name: string;
+  avatar: string;
+  email: string;
+  phone: string;
+  enrollmentId: string;
+  batch: string;
+  exam: string;
+  branch: string;
+  enrollmentDate: string;
+  status: "Active" | "Paused" | "Dropped" | "Completed" | "Waitlisted";
+  attendance: number;
+  avgScore: number;
+  feePaid: number;
+  feeTotal: number;
+  parentName: string;
+  parentPhone: string;
+  performanceTrend: "up" | "down" | "stable";
+  riskLevel: "low" | "medium" | "high";
+}
+
+export interface TestResult {
+  id: string;
+  testName: string;
+  type: "Chapter Test" | "Weekly Test" | "Monthly Mock" | "Scholarship Test";
+  subject: string;
+  date: string;
+  totalMarks: number;
+  marksObtained: number;
+  percentile: number;
+  rank: number;
+  totalStudents: number;
+  timeTaken: number;
+  totalTime: number;
+  accuracy: number;
+  attempted: number;
+  totalQuestions: number;
+  sectionWise: { section: string; marks: number; total: number; accuracy: number }[];
+  negativeMarks: number;
+}
+
+export interface ScheduleItem {
+  id: string;
+  type: "Live Class" | "Recorded" | "Test" | "Doubt Session" | "Assignment Due";
+  title: string;
+  subject: string;
+  faculty: string;
+  time: string;
+  duration: string;
+  batch: string;
+  room: string;
+  status: "Upcoming" | "Live" | "Completed" | "Cancelled";
+  meetLink?: string;
+}
+
+export interface Doubt {
+  id: string;
+  studentName: string;
+  studentAvatar: string;
+  subject: string;
+  chapter: string;
+  question: string;
+  image?: string;
+  status: "Submitted" | "In Progress" | "Resolved";
+  createdAt: Date;
+  resolvedAt?: Date;
+  assignedTo: string;
+  priority: "Low" | "Medium" | "High";
+}
+
+export interface Lead {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  exam: string;
+  source: "Google Ads" | "Referral" | "Walk-in" | "Website" | "Marketplace" | "Social Media" | "WhatsApp";
+  status: "New" | "Contacted" | "Demo Booked" | "Demo Done" | "Enrolled" | "Lost";
+  assignedTo: string;
+  createdAt: Date;
+  lastFollowUp: Date;
+  nextFollowUp: Date;
+  score: number;
+  notes: string;
+  lostReason?: string;
+}
+
+export interface FeeRecord {
+  id: string;
+  studentId: string;
+  studentName: string;
+  batch: string;
+  installment: number;
+  totalInstallments: number;
+  amount: number;
+  dueDate: string;
+  paidDate?: string;
+  status: "Paid" | "Pending" | "Overdue" | "Partially Paid";
+  method?: "UPI" | "Card" | "Net Banking" | "Cash" | "EMI";
+  receiptNo?: string;
+  discount?: { type: string; amount: number };
+}
+
+export interface Branch {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  manager: string;
+  phone: string;
+  studentCount: number;
+  facultyCount: number;
+  batchCount: number;
+  revenue: number;
+  collectionRatio: number;
+  enrollmentRate: number;
+  image: string;
+}
+
+export interface Notification {
+  id: string;
+  type: "class" | "test" | "fee" | "result" | "announcement" | "doubt" | "attendance";
+  title: string;
+  message: string;
+  time: Date;
+  read: boolean;
+  actionUrl?: string;
+}
+
+export interface LectureRecord {
+  id: string;
+  title: string;
+  subject: string;
+  chapter: string;
+  faculty: string;
+  duration: string;
+  date: string;
+  thumbnail: string;
+  watched: "Watched" | "Partially Watched" | "Unwatched";
+  progress: number;
+  views: number;
+}
+
+export interface StudyMaterial {
+  id: string;
+  title: string;
+  type: "PDF Notes" | "Video Short" | "Formula Sheet" | "PYQ Paper" | "DPP" | "Mind Map";
+  subject: string;
+  chapter: string;
+  faculty: string;
+  uploadDate: string;
+  downloads: number;
+  size: string;
+  bookmarked: boolean;
+}
+
+export interface Assignment {
+  id: string;
+  title: string;
+  subject: string;
+  chapter: string;
+  faculty: string;
+  dueDate: string;
+  submittedDate?: string;
+  status: "Pending" | "Submitted" | "Graded" | "Late" | "Overdue";
+  maxMarks: number;
+  marksObtained?: number;
+  feedback?: string;
+}
+
+// ---- MOCK DATA ----
+
+export const EXAMS = [
+  "JEE Main", "JEE Advanced", "NEET UG", "UPSC CSE", "CAT",
+  "GATE CS", "GATE ME", "SSC CGL", "Banking PO", "CBSE Board",
+  "ICSE Board", "State Board", "CLAT", "NDA",
+];
+
+export const SUBJECTS = {
+  jee: ["Physics", "Chemistry", "Mathematics"],
+  neet: ["Physics", "Chemistry", "Biology (Botany)", "Biology (Zoology)"],
+  upsc: ["General Studies", "CSAT", "Indian Polity", "History", "Geography", "Economics", "Ethics"],
+  cat: ["VARC", "DILR", "Quantitative Aptitude"],
+  board: ["Physics", "Chemistry", "Mathematics", "English", "Computer Science"],
+};
+
+export const CITIES = [
+  { city: "Lucknow", state: "Uttar Pradesh", lat: 26.85, lng: 80.95 },
+  { city: "Jaipur", state: "Rajasthan", lat: 26.91, lng: 75.79 },
+  { city: "Patna", state: "Bihar", lat: 25.61, lng: 85.14 },
+  { city: "Delhi", state: "Delhi NCR", lat: 28.70, lng: 77.10 },
+  { city: "Mumbai", state: "Maharashtra", lat: 19.08, lng: 72.88 },
+  { city: "Kota", state: "Rajasthan", lat: 25.18, lng: 75.83 },
+  { city: "Hyderabad", state: "Telangana", lat: 17.39, lng: 78.49 },
+  { city: "Chennai", state: "Tamil Nadu", lat: 13.08, lng: 80.27 },
+  { city: "Pune", state: "Maharashtra", lat: 18.52, lng: 73.86 },
+  { city: "Bengaluru", state: "Karnataka", lat: 12.97, lng: 77.59 },
+];
+
+export const institutes: Institute[] = [
+  {
+    id: "inst-1",
+    name: "Pinnacle IIT Academy",
+    slug: "pinnacle-iit-academy",
+    tagline: "Where Future Engineers Begin",
+    description: "Pinnacle IIT Academy has been the launchpad for over 2,000 IITians since 2008. With a team of 45+ faculty members from IITs and NITs, we offer the most comprehensive JEE preparation in North India. Our hybrid model combines the rigor of offline classroom teaching with the flexibility of recorded lectures and AI-powered doubt resolution.",
+    logo: "https://picsum.photos/seed/pinnacle-logo/200/200",
+    coverImage: "https://picsum.photos/seed/pinnacle-cover/1200/400",
+    rating: 4.7,
+    reviewCount: 2847,
+    location: { city: "Kota", area: "Talwandi", state: "Rajasthan", lat: 25.18, lng: 75.83 },
+    exams: ["JEE Main", "JEE Advanced"],
+    established: 2008,
+    studentCount: 12500,
+    facultyCount: 48,
+    branchCount: 5,
+    passRate: 94,
+    topperCount: 187,
+    feeRange: { min: 85000, max: 275000 },
+    features: ["Hybrid Classes", "AI Doubt Clearing", "Daily Tests", "Hostel Facility", "Scholarship Tests"],
+    images: [
+      "https://picsum.photos/seed/pinnacle-1/800/500",
+      "https://picsum.photos/seed/pinnacle-2/800/500",
+      "https://picsum.photos/seed/pinnacle-3/800/500",
+    ],
+    verified: true,
+    trending: true,
+  },
+  {
+    id: "inst-2",
+    name: "MedPrep Institute",
+    slug: "medprep-institute",
+    tagline: "Your Path to AIIMS & Top Medical Colleges",
+    description: "MedPrep Institute specializes exclusively in NEET preparation with a faculty team of practicing doctors and PhD holders. Our NCERT-first approach combined with advanced problem-solving has helped 800+ students secure MBBS seats in government medical colleges last year alone.",
+    logo: "https://picsum.photos/seed/medprep-logo/200/200",
+    coverImage: "https://picsum.photos/seed/medprep-cover/1200/400",
+    rating: 4.6,
+    reviewCount: 1923,
+    location: { city: "Delhi", area: "Rajouri Garden", state: "Delhi NCR", lat: 28.65, lng: 77.12 },
+    exams: ["NEET UG"],
+    established: 2012,
+    studentCount: 8200,
+    facultyCount: 35,
+    branchCount: 3,
+    passRate: 91,
+    topperCount: 93,
+    feeRange: { min: 65000, max: 195000 },
+    features: ["NCERT Line-by-Line", "Biology Labs", "Weekly NEET Mocks", "Parent Dashboard"],
+    images: [
+      "https://picsum.photos/seed/medprep-1/800/500",
+      "https://picsum.photos/seed/medprep-2/800/500",
+    ],
+    verified: true,
+    trending: true,
+  },
+  {
+    id: "inst-3",
+    name: "Excel Board Coaching",
+    slug: "excel-board-coaching",
+    tagline: "95%+ Board Scores, Guaranteed Foundation",
+    description: "Excel Board Coaching focuses on Class 9–12 CBSE and ICSE board preparation with a unique methodology that builds a strong foundation for competitive exams. Small batch sizes of 25 students ensure personalized attention.",
+    logo: "https://picsum.photos/seed/excel-logo/200/200",
+    coverImage: "https://picsum.photos/seed/excel-cover/1200/400",
+    rating: 4.5,
+    reviewCount: 1456,
+    location: { city: "Mumbai", area: "Andheri West", state: "Maharashtra", lat: 19.14, lng: 72.84 },
+    exams: ["CBSE Board", "ICSE Board", "JEE Main"],
+    established: 2015,
+    studentCount: 4500,
+    facultyCount: 22,
+    branchCount: 2,
+    passRate: 98,
+    topperCount: 45,
+    feeRange: { min: 35000, max: 120000 },
+    features: ["Small Batches", "Board + JEE Combo", "Parent-Teacher App", "Weekend Batches"],
+    images: [
+      "https://picsum.photos/seed/excel-1/800/500",
+      "https://picsum.photos/seed/excel-2/800/500",
+    ],
+    verified: true,
+    trending: false,
+  },
+  {
+    id: "inst-4",
+    name: "Lakshya Civil Services",
+    slug: "lakshya-civil-services",
+    tagline: "Shaping India's Future Administrators",
+    description: "Lakshya Civil Services is a premier UPSC coaching institute founded by retired IAS officer Shri R.K. Mishra. Our 18-month integrated program covers Prelims, Mains, and Interview preparation with a focus on answer writing skills and current affairs.",
+    logo: "https://picsum.photos/seed/lakshya-logo/200/200",
+    coverImage: "https://picsum.photos/seed/lakshya-cover/1200/400",
+    rating: 4.8,
+    reviewCount: 876,
+    location: { city: "Delhi", area: "Mukherjee Nagar", state: "Delhi NCR", lat: 28.71, lng: 77.21 },
+    exams: ["UPSC CSE"],
+    established: 2006,
+    studentCount: 3200,
+    facultyCount: 18,
+    branchCount: 2,
+    passRate: 12,
+    topperCount: 67,
+    feeRange: { min: 95000, max: 185000 },
+    features: ["Answer Writing Practice", "Daily Current Affairs", "Mock Interviews", "Mentorship"],
+    images: [
+      "https://picsum.photos/seed/lakshya-1/800/500",
+    ],
+    verified: true,
+    trending: false,
+  },
+  {
+    id: "inst-5",
+    name: "Catalyst Classes",
+    slug: "catalyst-classes",
+    tagline: "Accelerate Your JEE Dreams",
+    description: "Catalyst Classes offers affordable yet high-quality JEE and NEET preparation in Tier-2 cities. Founded by IIT Bombay alumni, our online-first approach with weekend offline doubt sessions makes quality coaching accessible to students who can't relocate to coaching hubs.",
+    logo: "https://picsum.photos/seed/catalyst-logo/200/200",
+    coverImage: "https://picsum.photos/seed/catalyst-cover/1200/400",
+    rating: 4.4,
+    reviewCount: 2134,
+    location: { city: "Lucknow", area: "Hazratganj", state: "Uttar Pradesh", lat: 26.85, lng: 80.95 },
+    exams: ["JEE Main", "JEE Advanced", "NEET UG"],
+    established: 2018,
+    studentCount: 6800,
+    facultyCount: 28,
+    branchCount: 4,
+    passRate: 87,
+    topperCount: 34,
+    feeRange: { min: 45000, max: 155000 },
+    features: ["Online + Offline Hybrid", "Affordable Fees", "Scholarship Tests", "Mobile App"],
+    images: [
+      "https://picsum.photos/seed/catalyst-1/800/500",
+      "https://picsum.photos/seed/catalyst-2/800/500",
+    ],
+    verified: true,
+    trending: true,
+  },
+  {
+    id: "inst-6",
+    name: "GateWay Engineering Academy",
+    slug: "gateway-engineering-academy",
+    tagline: "Your Gateway to PSUs and IITs (M.Tech)",
+    description: "GateWay Engineering Academy is India's leading GATE coaching institute with specialized programs for CS, ME, EE, and EC branches. Our virtual calculator practice sessions and PSU-specific preparation sets us apart.",
+    logo: "https://picsum.photos/seed/gateway-logo/200/200",
+    coverImage: "https://picsum.photos/seed/gateway-cover/1200/400",
+    rating: 4.3,
+    reviewCount: 945,
+    location: { city: "Hyderabad", area: "Ameerpet", state: "Telangana", lat: 17.44, lng: 78.45 },
+    exams: ["GATE CS", "GATE ME"],
+    established: 2014,
+    studentCount: 5400,
+    facultyCount: 20,
+    branchCount: 3,
+    passRate: 78,
+    topperCount: 28,
+    feeRange: { min: 35000, max: 95000 },
+    features: ["Branch-Specific Modules", "Virtual Calculator", "PSU Cutoff Data", "Online Tests"],
+    images: [
+      "https://picsum.photos/seed/gateway-1/800/500",
+    ],
+    verified: true,
+    trending: false,
+  },
+];
+
+export const courses: Course[] = [
+  {
+    id: "course-1",
+    instituteId: "inst-1",
+    instituteName: "Pinnacle IIT Academy",
+    name: "JEE Advanced — 2-Year Integrated Program (Class 11–12)",
+    exam: "JEE Advanced",
+    description: "Comprehensive 2-year program covering complete Class 11 and 12 syllabus with advanced problem-solving for JEE Main and Advanced. Includes 120+ full-length mock tests, daily practice problems, and 1-on-1 mentorship from IIT alumni.",
+    duration: "24 months",
+    mode: "Hybrid",
+    subjects: ["Physics", "Chemistry", "Mathematics"],
+    feeTotal: 275000,
+    feeMonthly: 12500,
+    batchOptions: [
+      { id: "b1", name: "Morning Batch (Kota)", timing: "6:30 AM – 12:30 PM", days: "Mon–Sat", seatsTotal: 60, seatsFilled: 52, startDate: "2026-04-15", faculty: ["Dr. Anil Verma", "Prof. Sneha Iyer"] },
+      { id: "b2", name: "Evening Batch (Kota)", timing: "2:00 PM – 8:00 PM", days: "Mon–Sat", seatsTotal: 60, seatsFilled: 47, startDate: "2026-04-15", faculty: ["Dr. Rajesh Kumar", "Prof. Meera Nair"] },
+      { id: "b3", name: "Online Live Batch", timing: "7:00 PM – 10:00 PM", days: "Mon–Fri", seatsTotal: 120, seatsFilled: 89, startDate: "2026-04-20", faculty: ["Dr. Anil Verma", "Prof. Kunal Shah"] },
+    ],
+    syllabus: [
+      { id: "s1", subject: "Physics", chapter: "Mechanics — Kinematics", lectures: 12, completed: 12, testScheduled: true },
+      { id: "s2", subject: "Physics", chapter: "Mechanics — Laws of Motion", lectures: 10, completed: 10, testScheduled: true },
+      { id: "s3", subject: "Physics", chapter: "Work, Energy & Power", lectures: 8, completed: 6, testScheduled: false },
+      { id: "s4", subject: "Physics", chapter: "Rotational Motion", lectures: 14, completed: 4, testScheduled: false },
+      { id: "s5", subject: "Chemistry", chapter: "Atomic Structure", lectures: 8, completed: 8, testScheduled: true },
+      { id: "s6", subject: "Chemistry", chapter: "Chemical Bonding", lectures: 10, completed: 7, testScheduled: true },
+      { id: "s7", subject: "Chemistry", chapter: "Thermodynamics", lectures: 12, completed: 3, testScheduled: false },
+      { id: "s8", subject: "Mathematics", chapter: "Quadratic Equations", lectures: 8, completed: 8, testScheduled: true },
+      { id: "s9", subject: "Mathematics", chapter: "Trigonometry", lectures: 14, completed: 10, testScheduled: true },
+      { id: "s10", subject: "Mathematics", chapter: "Coordinate Geometry", lectures: 12, completed: 5, testScheduled: false },
+    ],
+    features: ["120+ Mock Tests", "Daily Practice Problems", "AI Doubt Resolution", "1-on-1 Mentorship", "Previous 15 Years JEE Papers", "Rank Predictor"],
+    rating: 4.7,
+    enrolledCount: 1847,
+    image: "https://picsum.photos/seed/jee-course/800/500",
+    sampleLectureUrl: "#",
+    startDate: "2026-04-15",
+    isCrashCourse: false,
+  },
+  {
+    id: "course-2",
+    instituteId: "inst-2",
+    instituteName: "MedPrep Institute",
+    name: "NEET UG — Complete Preparation (Class 11–12)",
+    exam: "NEET UG",
+    description: "Our flagship NEET program follows the NCERT line-by-line approach with deep-dive sessions on high-weightage chapters. Includes weekly NEET-pattern mocks, biology lab sessions, and assertion-reasoning practice.",
+    duration: "18 months",
+    mode: "Offline",
+    subjects: ["Physics", "Chemistry", "Biology (Botany)", "Biology (Zoology)"],
+    feeTotal: 195000,
+    feeMonthly: 11000,
+    batchOptions: [
+      { id: "b4", name: "Regular Batch (Delhi)", timing: "8:00 AM – 2:00 PM", days: "Mon–Sat", seatsTotal: 45, seatsFilled: 42, startDate: "2026-04-10", faculty: ["Dr. Priya Sharma", "Dr. Amit Gupta"] },
+      { id: "b5", name: "Repeater Batch", timing: "3:00 PM – 8:00 PM", days: "Mon–Sat", seatsTotal: 40, seatsFilled: 31, startDate: "2026-05-01", faculty: ["Dr. Kavita Singh", "Dr. Rohit Mehra"] },
+    ],
+    syllabus: [
+      { id: "s11", subject: "Biology", chapter: "Cell Biology & Cell Division", lectures: 14, completed: 14, testScheduled: true },
+      { id: "s12", subject: "Biology", chapter: "Plant Physiology", lectures: 12, completed: 9, testScheduled: true },
+      { id: "s13", subject: "Biology", chapter: "Human Physiology", lectures: 16, completed: 6, testScheduled: false },
+      { id: "s14", subject: "Biology", chapter: "Genetics & Evolution", lectures: 18, completed: 2, testScheduled: false },
+      { id: "s15", subject: "Physics", chapter: "Optics", lectures: 10, completed: 10, testScheduled: true },
+      { id: "s16", subject: "Chemistry", chapter: "Organic Chemistry — Basics", lectures: 12, completed: 8, testScheduled: true },
+    ],
+    features: ["NCERT Line-by-Line", "Biology Labs", "NEET Pattern Mocks", "Assertion-Reasoning Practice", "Medical College Cutoff Predictor"],
+    rating: 4.6,
+    enrolledCount: 1234,
+    image: "https://picsum.photos/seed/neet-course/800/500",
+    sampleLectureUrl: "#",
+    startDate: "2026-04-10",
+    isCrashCourse: false,
+  },
+  {
+    id: "course-3",
+    instituteId: "inst-1",
+    instituteName: "Pinnacle IIT Academy",
+    name: "JEE Main — 90-Day Crash Course",
+    exam: "JEE Main",
+    description: "Intensive 90-day crash course for JEE Main aspirants. Covers high-weightage chapters, 500+ frequently asked problems, and 30 full-length mock tests. Perfect for last-minute revision and score boost.",
+    duration: "90 days",
+    mode: "Online",
+    subjects: ["Physics", "Chemistry", "Mathematics"],
+    feeTotal: 45000,
+    feeMonthly: 15000,
+    batchOptions: [
+      { id: "b6", name: "Crash Batch — Online", timing: "6:00 PM – 9:00 PM", days: "Daily", seatsTotal: 200, seatsFilled: 156, startDate: "2026-04-01", faculty: ["Dr. Anil Verma", "Prof. Sneha Iyer", "Prof. Kunal Shah"] },
+    ],
+    syllabus: [
+      { id: "s17", subject: "Physics", chapter: "Modern Physics (Crash)", lectures: 6, completed: 0, testScheduled: true },
+      { id: "s18", subject: "Physics", chapter: "Electrostatics & Current (Crash)", lectures: 8, completed: 0, testScheduled: true },
+      { id: "s19", subject: "Chemistry", chapter: "Inorganic Chemistry (Crash)", lectures: 6, completed: 0, testScheduled: true },
+      { id: "s20", subject: "Mathematics", chapter: "Calculus (Crash)", lectures: 10, completed: 0, testScheduled: true },
+    ],
+    features: ["30 Full-Length Mocks", "500+ Frequently Asked Problems", "Daily DPPs", "Rapid Revision Notes"],
+    rating: 4.3,
+    enrolledCount: 892,
+    image: "https://picsum.photos/seed/crash-course/800/500",
+    sampleLectureUrl: "#",
+    startDate: "2026-04-01",
+    isCrashCourse: true,
+  },
+  {
+    id: "course-4",
+    instituteId: "inst-3",
+    instituteName: "Excel Board Coaching",
+    name: "CBSE Class 10 — Complete Board Preparation",
+    exam: "CBSE Board",
+    description: "Comprehensive Class 10 CBSE board preparation covering all subjects. Our structured approach ensures students build strong fundamentals while scoring 95%+ in board exams.",
+    duration: "12 months",
+    mode: "Hybrid",
+    subjects: ["Mathematics", "Science", "English", "Social Science", "Hindi"],
+    feeTotal: 72000,
+    feeMonthly: 6000,
+    batchOptions: [
+      { id: "b7", name: "Weekday Batch", timing: "4:00 PM – 7:00 PM", days: "Mon–Fri", seatsTotal: 25, seatsFilled: 23, startDate: "2026-04-05", faculty: ["Mrs. Anita Desai", "Mr. Sanjay Patel"] },
+      { id: "b8", name: "Weekend Batch", timing: "9:00 AM – 3:00 PM", days: "Sat–Sun", seatsTotal: 30, seatsFilled: 18, startDate: "2026-04-06", faculty: ["Mrs. Anita Desai", "Mr. Rahul Joshi"] },
+    ],
+    syllabus: [
+      { id: "s21", subject: "Mathematics", chapter: "Real Numbers", lectures: 4, completed: 4, testScheduled: true },
+      { id: "s22", subject: "Mathematics", chapter: "Polynomials", lectures: 5, completed: 3, testScheduled: false },
+      { id: "s23", subject: "Science", chapter: "Chemical Reactions", lectures: 6, completed: 6, testScheduled: true },
+      { id: "s24", subject: "Science", chapter: "Life Processes", lectures: 8, completed: 4, testScheduled: false },
+    ],
+    features: ["Small Batch (25 students)", "Board Pattern Papers", "Weekly Tests", "Parent Dashboard", "Assignment Tracking"],
+    rating: 4.5,
+    enrolledCount: 567,
+    image: "https://picsum.photos/seed/board-course/800/500",
+    sampleLectureUrl: "#",
+    startDate: "2026-04-05",
+    isCrashCourse: false,
+  },
+  {
+    id: "course-5",
+    instituteId: "inst-4",
+    instituteName: "Lakshya Civil Services",
+    name: "UPSC CSE — 18-Month Integrated Program",
+    exam: "UPSC CSE",
+    description: "Our flagship UPSC program covers Prelims, Mains, and Interview preparation. Daily current affairs, weekly answer writing sessions, and monthly mock prelims build the discipline and depth needed to crack civil services.",
+    duration: "18 months",
+    mode: "Hybrid",
+    subjects: ["General Studies", "CSAT", "Indian Polity", "History", "Geography", "Economics"],
+    feeTotal: 175000,
+    feeMonthly: 10000,
+    batchOptions: [
+      { id: "b9", name: "Foundation Batch (Delhi)", timing: "9:00 AM – 1:00 PM", days: "Mon–Sat", seatsTotal: 50, seatsFilled: 44, startDate: "2026-04-15", faculty: ["Shri R.K. Mishra", "Prof. Deepa Jain"] },
+      { id: "b10", name: "Online Foundation", timing: "7:00 PM – 10:00 PM", days: "Mon–Fri", seatsTotal: 100, seatsFilled: 72, startDate: "2026-04-20", faculty: ["Shri R.K. Mishra", "Prof. Vikram Reddy"] },
+    ],
+    syllabus: [
+      { id: "s25", subject: "Indian Polity", chapter: "Constitutional Framework", lectures: 16, completed: 16, testScheduled: true },
+      { id: "s26", subject: "History", chapter: "Modern India (1857–1947)", lectures: 14, completed: 10, testScheduled: true },
+      { id: "s27", subject: "Geography", chapter: "Physical Geography", lectures: 12, completed: 5, testScheduled: false },
+      { id: "s28", subject: "Economics", chapter: "Indian Economy — Basics", lectures: 10, completed: 3, testScheduled: false },
+    ],
+    features: ["Daily Current Affairs", "Answer Writing Practice", "Mock Interviews", "Mentorship from IAS Officers", "Essay Evaluation"],
+    rating: 4.8,
+    enrolledCount: 423,
+    image: "https://picsum.photos/seed/upsc-course/800/500",
+    sampleLectureUrl: "#",
+    startDate: "2026-04-15",
+    isCrashCourse: false,
+  },
+];
+
+export const faculty: Faculty[] = [
+  { id: "f1", name: "Dr. Anil Verma", avatar: "https://picsum.photos/seed/anil-v/200/200", subject: "Physics", qualification: "PhD IIT Delhi", experience: 18, rating: 4.9, studentsCount: 3200, specialization: "Mechanics & Modern Physics", bio: "Former senior faculty at Allen Kota. 200+ IIT selections under his guidance." },
+  { id: "f2", name: "Prof. Sneha Iyer", avatar: "https://picsum.photos/seed/sneha-i/200/200", subject: "Chemistry", qualification: "M.Sc IIT Bombay", experience: 12, rating: 4.7, studentsCount: 2800, specialization: "Organic Chemistry", bio: "Known for making Organic Chemistry intuitive with real-world analogies." },
+  { id: "f3", name: "Prof. Kunal Shah", avatar: "https://picsum.photos/seed/kunal-s/200/200", subject: "Mathematics", qualification: "M.Sc IIT Kanpur", experience: 15, rating: 4.8, studentsCount: 4100, specialization: "Calculus & Coordinate Geometry", bio: "15 years of JEE coaching experience. Creator of '1000 Must-Do JEE Math Problems'." },
+  { id: "f4", name: "Dr. Priya Sharma", avatar: "https://picsum.photos/seed/priya-s/200/200", subject: "Biology", qualification: "MBBS, MD AIIMS Delhi", experience: 10, rating: 4.8, studentsCount: 1900, specialization: "Human Physiology & Genetics", bio: "Practicing doctor who teaches NEET Biology with clinical case studies." },
+  { id: "f5", name: "Dr. Rajesh Kumar", avatar: "https://picsum.photos/seed/rajesh-k/200/200", subject: "Physics", qualification: "PhD IISc Bangalore", experience: 20, rating: 4.6, studentsCount: 5200, specialization: "Electromagnetism & Optics", bio: "Author of 3 Physics textbooks. Conceptual teaching style." },
+  { id: "f6", name: "Mrs. Anita Desai", avatar: "https://picsum.photos/seed/anita-d/200/200", subject: "Mathematics", qualification: "M.Ed, B.Sc Mathematics", experience: 14, rating: 4.5, studentsCount: 1200, specialization: "Board-level Mathematics", bio: "Specialist in board exam preparation with 98% average score for her students." },
+  { id: "f7", name: "Shri R.K. Mishra", avatar: "https://picsum.photos/seed/rk-m/200/200", subject: "General Studies", qualification: "IAS (Retired)", experience: 25, rating: 4.9, studentsCount: 800, specialization: "Indian Polity & Governance", bio: "Retired IAS officer (1992 batch). 67 of his students have cleared UPSC." },
+  { id: "f8", name: "Dr. Kavita Singh", avatar: "https://picsum.photos/seed/kavita-s/200/200", subject: "Biology", qualification: "PhD Botany, Delhi University", experience: 11, rating: 4.4, studentsCount: 1600, specialization: "Botany & Plant Physiology", bio: "Makes Botany interesting with field trip approaches and visual learning." },
+];
+
+export const currentStudent: Student = {
+  id: "stu-1",
+  name: "Arjun Mehta",
+  avatar: "https://picsum.photos/seed/arjun-m/200/200",
+  email: "arjun.mehta@gmail.com",
+  phone: "+91 98765 43210",
+  enrollmentId: "LPA-2026-00147",
+  batch: "JEE Advanced — Morning Batch (Kota)",
+  exam: "JEE Advanced",
+  branch: "Kota — Talwandi",
+  enrollmentDate: "2025-06-15",
+  status: "Active",
+  attendance: 87.5,
+  avgScore: 72.3,
+  feePaid: 195000,
+  feeTotal: 275000,
+  parentName: "Rajesh Mehta",
+  parentPhone: "+91 98765 43211",
+  performanceTrend: "up",
+  riskLevel: "low",
+};
+
+export const studentTestResults: TestResult[] = [
+  {
+    id: "tr-1", testName: "JEE Main Mock Test #14", type: "Monthly Mock", subject: "All Subjects", date: "2026-03-25",
+    totalMarks: 300, marksObtained: 218, percentile: 94.2, rank: 23, totalStudents: 892, timeTaken: 165, totalTime: 180,
+    accuracy: 78.5, attempted: 62, totalQuestions: 75, negativeMarks: 8,
+    sectionWise: [
+      { section: "Physics", marks: 76, total: 100, accuracy: 82 },
+      { section: "Chemistry", marks: 72, total: 100, accuracy: 75 },
+      { section: "Mathematics", marks: 70, total: 100, accuracy: 78 },
+    ],
+  },
+  {
+    id: "tr-2", testName: "Physics — Rotational Motion", type: "Chapter Test", subject: "Physics", date: "2026-03-22",
+    totalMarks: 60, marksObtained: 48, percentile: 89.1, rank: 8, totalStudents: 58, timeTaken: 38, totalTime: 45,
+    accuracy: 85.7, attempted: 14, totalQuestions: 15, negativeMarks: 2,
+    sectionWise: [
+      { section: "Numerical", marks: 20, total: 24, accuracy: 90 },
+      { section: "MCQ", marks: 16, total: 20, accuracy: 80 },
+      { section: "Conceptual", marks: 12, total: 16, accuracy: 85 },
+    ],
+  },
+  {
+    id: "tr-3", testName: "Weekly Test — Week 38", type: "Weekly Test", subject: "PCM", date: "2026-03-20",
+    totalMarks: 150, marksObtained: 112, percentile: 91.5, rank: 12, totalStudents: 58, timeTaken: 82, totalTime: 90,
+    accuracy: 80.0, attempted: 35, totalQuestions: 45, negativeMarks: 6,
+    sectionWise: [
+      { section: "Physics", marks: 40, total: 50, accuracy: 85 },
+      { section: "Chemistry", marks: 35, total: 50, accuracy: 74 },
+      { section: "Mathematics", marks: 37, total: 50, accuracy: 82 },
+    ],
+  },
+  {
+    id: "tr-4", testName: "Chemistry — Chemical Bonding", type: "Chapter Test", subject: "Chemistry", date: "2026-03-17",
+    totalMarks: 50, marksObtained: 34, percentile: 72.8, rank: 19, totalStudents: 58, timeTaken: 28, totalTime: 30,
+    accuracy: 72.0, attempted: 12, totalQuestions: 15, negativeMarks: 3,
+    sectionWise: [
+      { section: "Theory MCQ", marks: 18, total: 25, accuracy: 75 },
+      { section: "Numerical", marks: 16, total: 25, accuracy: 68 },
+    ],
+  },
+  {
+    id: "tr-5", testName: "JEE Main Mock Test #13", type: "Monthly Mock", subject: "All Subjects", date: "2026-02-25",
+    totalMarks: 300, marksObtained: 196, percentile: 90.8, rank: 41, totalStudents: 886, timeTaken: 172, totalTime: 180,
+    accuracy: 74.2, attempted: 58, totalQuestions: 75, negativeMarks: 12,
+    sectionWise: [
+      { section: "Physics", marks: 72, total: 100, accuracy: 78 },
+      { section: "Chemistry", marks: 64, total: 100, accuracy: 70 },
+      { section: "Mathematics", marks: 60, total: 100, accuracy: 74 },
+    ],
+  },
+];
+
+export const todaySchedule: ScheduleItem[] = [
+  { id: "sch-1", type: "Live Class", title: "Rotational Motion — Moment of Inertia", subject: "Physics", faculty: "Dr. Anil Verma", time: "6:30 AM", duration: "90 min", batch: "Morning Batch", room: "Hall A", status: "Completed" },
+  { id: "sch-2", type: "Live Class", title: "Organic Chemistry — Alcohols & Phenols", subject: "Chemistry", faculty: "Prof. Sneha Iyer", time: "8:15 AM", duration: "75 min", batch: "Morning Batch", room: "Hall A", status: "Completed" },
+  { id: "sch-3", type: "Test", title: "Trigonometry — Chapter Test", subject: "Mathematics", faculty: "Prof. Kunal Shah", time: "10:00 AM", duration: "45 min", batch: "Morning Batch", room: "Test Lab", status: "Completed" },
+  { id: "sch-4", type: "Live Class", title: "Coordinate Geometry — Circles", subject: "Mathematics", faculty: "Prof. Kunal Shah", time: "11:00 AM", duration: "90 min", batch: "Morning Batch", room: "Hall B", status: "Live", meetLink: "#" },
+  { id: "sch-5", type: "Doubt Session", title: "Physics Doubt Clearing", subject: "Physics", faculty: "Dr. Anil Verma", time: "2:00 PM", duration: "60 min", batch: "Morning Batch", room: "Room 201", status: "Upcoming" },
+  { id: "sch-6", type: "Assignment Due", title: "Thermodynamics Problem Set — Submission", subject: "Chemistry", faculty: "Prof. Sneha Iyer", time: "5:00 PM", duration: "—", batch: "Morning Batch", room: "—", status: "Upcoming" },
+  { id: "sch-7", type: "Recorded", title: "Electrostatics Revision (Watch Before Monday)", subject: "Physics", faculty: "Dr. Rajesh Kumar", time: "Self-paced", duration: "120 min", batch: "Morning Batch", room: "Online", status: "Upcoming" },
+];
+
+export const studentDoubts: Doubt[] = [
+  { id: "d1", studentName: "Arjun Mehta", studentAvatar: "https://picsum.photos/seed/arjun-m/200/200", subject: "Physics", chapter: "Rotational Motion", question: "How do I find the moment of inertia of a hollow sphere about a tangential axis? The parallel axis theorem gives me a different answer than what's in the solution.", status: "Resolved", createdAt: new Date("2026-03-27T14:30:00"), resolvedAt: new Date("2026-03-27T16:45:00"), assignedTo: "Dr. Anil Verma", priority: "Medium" },
+  { id: "d2", studentName: "Arjun Mehta", studentAvatar: "https://picsum.photos/seed/arjun-m/200/200", subject: "Chemistry", chapter: "Chemical Bonding", question: "Why does BF3 not follow the octet rule? Is it because of the empty p-orbital on Boron? How does this affect its Lewis acid behavior?", status: "In Progress", createdAt: new Date("2026-03-28T09:15:00"), assignedTo: "Prof. Sneha Iyer", priority: "High", image: "https://picsum.photos/seed/doubt-img-1/400/300" },
+  { id: "d3", studentName: "Arjun Mehta", studentAvatar: "https://picsum.photos/seed/arjun-m/200/200", subject: "Mathematics", chapter: "Coordinate Geometry", question: "Can someone explain the director circle concept for ellipses? I keep confusing it with the auxiliary circle.", status: "Submitted", createdAt: new Date("2026-03-28T10:45:00"), assignedTo: "Prof. Kunal Shah", priority: "Low" },
+];
+
+export const lectures: LectureRecord[] = [
+  { id: "l1", title: "Mechanics — Newton's Laws: Advanced Applications", subject: "Physics", chapter: "Laws of Motion", faculty: "Dr. Anil Verma", duration: "1h 32m", date: "2026-03-27", thumbnail: "https://picsum.photos/seed/lecture-physics-1/640/360", watched: "Watched", progress: 100, views: 342 },
+  { id: "l2", title: "Organic Chemistry — Reaction Mechanisms: SN1 vs SN2", subject: "Chemistry", chapter: "Organic Chemistry", faculty: "Prof. Sneha Iyer", duration: "1h 15m", date: "2026-03-26", thumbnail: "https://picsum.photos/seed/lecture-chem-1/640/360", watched: "Partially Watched", progress: 65, views: 289 },
+  { id: "l3", title: "Definite Integrals — Properties and Tricks for JEE", subject: "Mathematics", chapter: "Calculus", faculty: "Prof. Kunal Shah", duration: "1h 45m", date: "2026-03-25", thumbnail: "https://picsum.photos/seed/lecture-math-1/640/360", watched: "Watched", progress: 100, views: 478 },
+  { id: "l4", title: "Electrostatics — Electric Field Lines and Gauss's Law", subject: "Physics", chapter: "Electrostatics", faculty: "Dr. Rajesh Kumar", duration: "1h 28m", date: "2026-03-24", thumbnail: "https://picsum.photos/seed/lecture-physics-2/640/360", watched: "Unwatched", progress: 0, views: 256 },
+  { id: "l5", title: "Thermodynamics — First Law and Applications", subject: "Chemistry", chapter: "Thermodynamics", faculty: "Prof. Sneha Iyer", duration: "1h 20m", date: "2026-03-23", thumbnail: "https://picsum.photos/seed/lecture-chem-2/640/360", watched: "Partially Watched", progress: 30, views: 312 },
+  { id: "l6", title: "Matrices & Determinants — Solving JEE Problems", subject: "Mathematics", chapter: "Algebra", faculty: "Prof. Kunal Shah", duration: "1h 38m", date: "2026-03-22", thumbnail: "https://picsum.photos/seed/lecture-math-2/640/360", watched: "Unwatched", progress: 0, views: 198 },
+];
+
+export const studyMaterials: StudyMaterial[] = [
+  { id: "sm1", title: "Rotational Motion — Complete Notes", type: "PDF Notes", subject: "Physics", chapter: "Rotational Motion", faculty: "Dr. Anil Verma", uploadDate: "2026-03-20", downloads: 892, size: "4.2 MB", bookmarked: true },
+  { id: "sm2", title: "Organic Chemistry Formulae Sheet", type: "Formula Sheet", subject: "Chemistry", chapter: "All Chapters", faculty: "Prof. Sneha Iyer", uploadDate: "2026-03-18", downloads: 1456, size: "1.8 MB", bookmarked: true },
+  { id: "sm3", title: "JEE Main 2025 Paper (January Shift 1)", type: "PYQ Paper", subject: "All", chapter: "Full Syllabus", faculty: "Admin", uploadDate: "2026-03-15", downloads: 2341, size: "6.7 MB", bookmarked: false },
+  { id: "sm4", title: "Coordinate Geometry — Quick Revision (12 min)", type: "Video Short", subject: "Mathematics", chapter: "Coordinate Geometry", faculty: "Prof. Kunal Shah", uploadDate: "2026-03-22", downloads: 567, size: "85 MB", bookmarked: false },
+  { id: "sm5", title: "DPP #38 — Thermodynamics", type: "DPP", subject: "Chemistry", chapter: "Thermodynamics", faculty: "Prof. Sneha Iyer", uploadDate: "2026-03-26", downloads: 234, size: "1.1 MB", bookmarked: false },
+  { id: "sm6", title: "Kinematics Mind Map", type: "Mind Map", subject: "Physics", chapter: "Kinematics", faculty: "Dr. Anil Verma", uploadDate: "2026-03-10", downloads: 678, size: "2.3 MB", bookmarked: true },
+];
+
+export const assignments: Assignment[] = [
+  { id: "a1", title: "Rotational Motion — Problem Set 4", subject: "Physics", chapter: "Rotational Motion", faculty: "Dr. Anil Verma", dueDate: "2026-03-30", status: "Pending", maxMarks: 25 },
+  { id: "a2", title: "Chemical Bonding — Molecular Orbital Theory", subject: "Chemistry", chapter: "Chemical Bonding", faculty: "Prof. Sneha Iyer", dueDate: "2026-03-28", status: "Overdue", maxMarks: 20 },
+  { id: "a3", title: "Trigonometric Identities — Practice Sheet", subject: "Mathematics", chapter: "Trigonometry", faculty: "Prof. Kunal Shah", dueDate: "2026-03-25", submittedDate: "2026-03-24", status: "Graded", maxMarks: 30, marksObtained: 26, feedback: "Excellent work on proving identities. Review Q7 — the approach is correct but simplification has an error in the 3rd step." },
+  { id: "a4", title: "Kinematics — Projectile Motion Problems", subject: "Physics", chapter: "Kinematics", faculty: "Dr. Anil Verma", dueDate: "2026-03-20", submittedDate: "2026-03-19", status: "Graded", maxMarks: 20, marksObtained: 18, feedback: "Great problem-solving approach. Minor calculation errors in Q3 and Q8." },
+  { id: "a5", title: "Thermodynamics — Hess's Law Worksheet", subject: "Chemistry", chapter: "Thermodynamics", faculty: "Prof. Sneha Iyer", dueDate: "2026-04-02", status: "Pending", maxMarks: 15 },
+];
+
+export const notifications: Notification[] = [
+  { id: "n1", type: "class", title: "Live Class Starting", message: "Coordinate Geometry — Circles with Prof. Kunal Shah starts in 15 minutes", time: new Date("2026-03-28T10:45:00"), read: false, actionUrl: "/student/schedule" },
+  { id: "n2", type: "test", title: "Test Scheduled", message: "Monthly Mock Test #15 scheduled for April 2 (Monday). Full JEE Main pattern — 3 hours.", time: new Date("2026-03-28T08:00:00"), read: false, actionUrl: "/student/tests" },
+  { id: "n3", type: "result", title: "Results Published", message: "Physics — Rotational Motion chapter test results are out. You scored 48/60.", time: new Date("2026-03-27T18:00:00"), read: true, actionUrl: "/student/analytics" },
+  { id: "n4", type: "fee", title: "Fee Reminder", message: "Quarterly installment of ₹25,000 due on April 5. Pay now to avoid late fee.", time: new Date("2026-03-27T10:00:00"), read: true, actionUrl: "/student/dashboard" },
+  { id: "n5", type: "doubt", title: "Doubt Resolved", message: "Your doubt on Moment of Inertia has been resolved by Dr. Anil Verma.", time: new Date("2026-03-27T16:45:00"), read: true, actionUrl: "/student/doubts" },
+  { id: "n6", type: "announcement", title: "Holiday Notice", message: "Institute will remain closed on April 14 (Dr. Ambedkar Jayanti). Online doubt sessions will continue.", time: new Date("2026-03-26T12:00:00"), read: true },
+  { id: "n7", type: "attendance", title: "Attendance Alert", message: "Your attendance in Chemistry has dropped to 78%. Minimum required is 80%.", time: new Date("2026-03-25T09:00:00"), read: true },
+];
+
+// ---- INSTITUTE DASHBOARD DATA ----
+
+export const instituteStudents: Student[] = [
+  { id: "stu-1", name: "Arjun Mehta", avatar: "https://picsum.photos/seed/arjun-m/200/200", email: "arjun@gmail.com", phone: "+91 98765 43210", enrollmentId: "LPA-2026-00147", batch: "JEE Adv — Morning", exam: "JEE Advanced", branch: "Kota", enrollmentDate: "2025-06-15", status: "Active", attendance: 87.5, avgScore: 72.3, feePaid: 195000, feeTotal: 275000, parentName: "Rajesh Mehta", parentPhone: "+91 98765 43211", performanceTrend: "up", riskLevel: "low" },
+  { id: "stu-2", name: "Priya Sharma", avatar: "https://picsum.photos/seed/priya-sh/200/200", email: "priya.s@gmail.com", phone: "+91 87654 32109", enrollmentId: "LPA-2026-00148", batch: "JEE Adv — Morning", exam: "JEE Advanced", branch: "Kota", enrollmentDate: "2025-06-18", status: "Active", attendance: 94.2, avgScore: 85.7, feePaid: 275000, feeTotal: 275000, parentName: "Dinesh Sharma", parentPhone: "+91 87654 32108", performanceTrend: "up", riskLevel: "low" },
+  { id: "stu-3", name: "Rohit Gupta", avatar: "https://picsum.photos/seed/rohit-g/200/200", email: "rohit.gupta@yahoo.com", phone: "+91 76543 21098", enrollmentId: "LPA-2026-00149", batch: "JEE Adv — Evening", exam: "JEE Advanced", branch: "Kota", enrollmentDate: "2025-07-01", status: "Active", attendance: 68.3, avgScore: 55.1, feePaid: 137500, feeTotal: 275000, parentName: "Suresh Gupta", parentPhone: "+91 76543 21097", performanceTrend: "down", riskLevel: "high" },
+  { id: "stu-4", name: "Ananya Patel", avatar: "https://picsum.photos/seed/ananya-p/200/200", email: "ananya.p@gmail.com", phone: "+91 65432 10987", enrollmentId: "LPA-2026-00150", batch: "JEE Main — Online", exam: "JEE Main", branch: "Online", enrollmentDate: "2025-08-10", status: "Active", attendance: 91.0, avgScore: 78.9, feePaid: 155000, feeTotal: 155000, parentName: "Nilesh Patel", parentPhone: "+91 65432 10986", performanceTrend: "stable", riskLevel: "low" },
+  { id: "stu-5", name: "Karan Singh", avatar: "https://picsum.photos/seed/karan-s/200/200", email: "karan.s@outlook.com", phone: "+91 54321 09876", enrollmentId: "LPA-2026-00151", batch: "JEE Adv — Morning", exam: "JEE Advanced", branch: "Kota", enrollmentDate: "2025-06-20", status: "Paused", attendance: 45.2, avgScore: 42.8, feePaid: 195000, feeTotal: 275000, parentName: "Harjeet Singh", parentPhone: "+91 54321 09875", performanceTrend: "down", riskLevel: "high" },
+  { id: "stu-6", name: "Meera Krishnan", avatar: "https://picsum.photos/seed/meera-k/200/200", email: "meera.k@gmail.com", phone: "+91 43210 98765", enrollmentId: "LPA-2026-00152", batch: "NEET — Regular", exam: "NEET UG", branch: "Delhi", enrollmentDate: "2025-07-15", status: "Active", attendance: 88.7, avgScore: 81.2, feePaid: 146250, feeTotal: 195000, parentName: "Subramaniam K", parentPhone: "+91 43210 98764", performanceTrend: "up", riskLevel: "low" },
+  { id: "stu-7", name: "Vikram Reddy", avatar: "https://picsum.photos/seed/vikram-r/200/200", email: "vikram.r@gmail.com", phone: "+91 32109 87654", enrollmentId: "LPA-2026-00153", batch: "JEE Adv — Evening", exam: "JEE Advanced", branch: "Kota", enrollmentDate: "2025-06-25", status: "Active", attendance: 82.1, avgScore: 69.4, feePaid: 195000, feeTotal: 275000, parentName: "Ramesh Reddy", parentPhone: "+91 32109 87653", performanceTrend: "stable", riskLevel: "medium" },
+  { id: "stu-8", name: "Neha Agarwal", avatar: "https://picsum.photos/seed/neha-a/200/200", email: "neha.a@gmail.com", phone: "+91 21098 76543", enrollmentId: "LPA-2026-00154", batch: "JEE Main — Online", exam: "JEE Main", branch: "Online", enrollmentDate: "2025-09-01", status: "Dropped", attendance: 32.5, avgScore: 38.6, feePaid: 45000, feeTotal: 155000, parentName: "Sanjay Agarwal", parentPhone: "+91 21098 76542", performanceTrend: "down", riskLevel: "high" },
+  { id: "stu-9", name: "Aditya Joshi", avatar: "https://picsum.photos/seed/aditya-j/200/200", email: "aditya.j@gmail.com", phone: "+91 10987 65432", enrollmentId: "LPA-2026-00155", batch: "NEET — Repeater", exam: "NEET UG", branch: "Delhi", enrollmentDate: "2025-08-20", status: "Active", attendance: 76.4, avgScore: 63.8, feePaid: 97500, feeTotal: 195000, parentName: "Prakash Joshi", parentPhone: "+91 10987 65431", performanceTrend: "up", riskLevel: "medium" },
+  { id: "stu-10", name: "Shreya Das — A Very Long Student Name for Testing Edge Cases", avatar: "https://picsum.photos/seed/shreya-d/200/200", email: "shreya.d@gmail.com", phone: "+91 09876 54321", enrollmentId: "LPA-2026-00156", batch: "JEE Adv — Morning", exam: "JEE Advanced", branch: "Kota", enrollmentDate: "2026-01-10", status: "Waitlisted", attendance: 0, avgScore: 0, feePaid: 27500, feeTotal: 275000, parentName: "Subhash Das", parentPhone: "+91 09876 54320", performanceTrend: "stable", riskLevel: "low" },
+];
+
+export const leads: Lead[] = [
+  { id: "lead-1", name: "Amit Kumar", phone: "+91 99887 66554", email: "amit.k@gmail.com", exam: "JEE Main", source: "Google Ads", status: "New", assignedTo: "Neha Verma", createdAt: new Date("2026-03-28T09:30:00"), lastFollowUp: new Date("2026-03-28T09:30:00"), nextFollowUp: new Date("2026-03-28T14:00:00"), score: 45, notes: "Interested in online batch. Budget constraint — looking for scholarship test." },
+  { id: "lead-2", name: "Suman Devi", phone: "+91 88776 55443", email: "suman.d@yahoo.com", exam: "NEET UG", source: "Walk-in", status: "Demo Booked", assignedTo: "Neha Verma", createdAt: new Date("2026-03-26T11:00:00"), lastFollowUp: new Date("2026-03-27T15:00:00"), nextFollowUp: new Date("2026-03-29T10:00:00"), score: 72, notes: "Mother walked in with daughter. Class 11 student. Demo booked for March 29." },
+  { id: "lead-3", name: "Raj Malhotra", phone: "+91 77665 44332", email: "raj.m@gmail.com", exam: "JEE Advanced", source: "Referral", status: "Demo Done", assignedTo: "Pradeep Sinha", createdAt: new Date("2026-03-20T14:00:00"), lastFollowUp: new Date("2026-03-27T10:00:00"), nextFollowUp: new Date("2026-03-29T11:00:00"), score: 85, notes: "Referred by current student Priya Sharma. Attended demo on March 25. Very impressed with Physics faculty. Discussing fee with parents." },
+  { id: "lead-4", name: "Divya Nair", phone: "+91 66554 33221", email: "divya.n@gmail.com", exam: "UPSC CSE", source: "Website", status: "Contacted", assignedTo: "Pradeep Sinha", createdAt: new Date("2026-03-25T16:30:00"), lastFollowUp: new Date("2026-03-26T11:00:00"), nextFollowUp: new Date("2026-03-28T16:00:00"), score: 60, notes: "Working professional (2 years IT). Looking for weekend/evening batch for UPSC." },
+  { id: "lead-5", name: "Ravi Shankar", phone: "+91 55443 22110", email: "ravi.s@hotmail.com", exam: "JEE Main", source: "Social Media", status: "Lost", assignedTo: "Neha Verma", createdAt: new Date("2026-03-10T10:00:00"), lastFollowUp: new Date("2026-03-22T14:00:00"), nextFollowUp: new Date("2026-03-22T14:00:00"), score: 30, notes: "No response after 5 follow-up attempts.", lostReason: "No Response" },
+  { id: "lead-6", name: "Tanvi Jain", phone: "+91 44332 11009", email: "tanvi.j@gmail.com", exam: "NEET UG", source: "Marketplace", status: "Enrolled", assignedTo: "Neha Verma", createdAt: new Date("2026-03-05T09:00:00"), lastFollowUp: new Date("2026-03-18T12:00:00"), nextFollowUp: new Date("2026-03-18T12:00:00"), score: 95, notes: "Enrolled in NEET Regular Batch. Admission fee paid. Welcome kit sent." },
+  { id: "lead-7", name: "Manish Tiwari", phone: "+91 33221 00998", email: "manish.t@gmail.com", exam: "JEE Advanced", source: "Google Ads", status: "New", assignedTo: "Pradeep Sinha", createdAt: new Date("2026-03-28T08:15:00"), lastFollowUp: new Date("2026-03-28T08:15:00"), nextFollowUp: new Date("2026-03-28T12:00:00"), score: 50, notes: "Class 12 student from Lucknow. Looking for intensive batch." },
+  { id: "lead-8", name: "Pooja Bhatt", phone: "+91 22110 99887", email: "pooja.b@gmail.com", exam: "CBSE Board", source: "WhatsApp", status: "Contacted", assignedTo: "Neha Verma", createdAt: new Date("2026-03-27T13:00:00"), lastFollowUp: new Date("2026-03-27T18:00:00"), nextFollowUp: new Date("2026-03-29T10:00:00"), score: 55, notes: "Class 9 student. Parent inquired via WhatsApp. Interested in weekend batch for board preparation." },
+];
+
+export const feeRecords: FeeRecord[] = [
+  { id: "fee-1", studentId: "stu-1", studentName: "Arjun Mehta", batch: "JEE Adv — Morning", installment: 1, totalInstallments: 4, amount: 68750, dueDate: "2025-06-15", paidDate: "2025-06-15", status: "Paid", method: "UPI", receiptNo: "RCP-2025-00001" },
+  { id: "fee-2", studentId: "stu-1", studentName: "Arjun Mehta", batch: "JEE Adv — Morning", installment: 2, totalInstallments: 4, amount: 68750, dueDate: "2025-09-15", paidDate: "2025-09-12", status: "Paid", method: "Net Banking", receiptNo: "RCP-2025-00089", discount: { type: "Early Payment", amount: 3000 } },
+  { id: "fee-3", studentId: "stu-1", studentName: "Arjun Mehta", batch: "JEE Adv — Morning", installment: 3, totalInstallments: 4, amount: 68750, dueDate: "2025-12-15", paidDate: "2025-12-20", status: "Paid", method: "Card", receiptNo: "RCP-2025-00234" },
+  { id: "fee-4", studentId: "stu-1", studentName: "Arjun Mehta", batch: "JEE Adv — Morning", installment: 4, totalInstallments: 4, amount: 68750, dueDate: "2026-04-05", status: "Pending" },
+  { id: "fee-5", studentId: "stu-3", studentName: "Rohit Gupta", batch: "JEE Adv — Evening", installment: 3, totalInstallments: 4, amount: 68750, dueDate: "2026-02-01", status: "Overdue" },
+  { id: "fee-6", studentId: "stu-6", studentName: "Meera Krishnan", batch: "NEET — Regular", installment: 3, totalInstallments: 4, amount: 48750, dueDate: "2026-04-15", status: "Pending" },
+  { id: "fee-7", studentId: "stu-9", studentName: "Aditya Joshi", batch: "NEET — Repeater", installment: 2, totalInstallments: 4, amount: 48750, dueDate: "2026-03-20", status: "Overdue" },
+];
+
+export const branches: Branch[] = [
+  { id: "br-1", name: "Kota — Talwandi (HQ)", address: "42, Talwandi Road, Near DDIT Circle, Kota, Rajasthan 324005", city: "Kota", manager: "Rajiv Saxena", phone: "+91 98290 12345", studentCount: 3200, facultyCount: 18, batchCount: 12, revenue: 8750000, collectionRatio: 92.4, enrollmentRate: 87, image: "https://picsum.photos/seed/branch-kota/800/400" },
+  { id: "br-2", name: "Kota — Vigyan Nagar", address: "15, Vigyan Nagar Main Road, Kota, Rajasthan 324005", city: "Kota", manager: "Sunita Yadav", phone: "+91 98290 12346", studentCount: 2100, facultyCount: 12, batchCount: 8, revenue: 5420000, collectionRatio: 88.7, enrollmentRate: 82, image: "https://picsum.photos/seed/branch-vigyan/800/400" },
+  { id: "br-3", name: "Delhi — Rajouri Garden", address: "B-23, Rajouri Garden, Near Metro Station, New Delhi 110027", city: "Delhi", manager: "Amit Kapoor", phone: "+91 98110 56789", studentCount: 1800, facultyCount: 10, batchCount: 7, revenue: 4680000, collectionRatio: 90.1, enrollmentRate: 79, image: "https://picsum.photos/seed/branch-delhi/800/400" },
+  { id: "br-4", name: "Lucknow — Hazratganj", address: "78, MG Road, Hazratganj, Lucknow, UP 226001", city: "Lucknow", manager: "Prashant Mishra", phone: "+91 94150 34567", studentCount: 1400, facultyCount: 8, batchCount: 5, revenue: 3150000, collectionRatio: 85.3, enrollmentRate: 75, image: "https://picsum.photos/seed/branch-lucknow/800/400" },
+  { id: "br-5", name: "Jaipur — Vaishali Nagar", address: "112, Vaishali Nagar, Near Ridhi Sidhi Circle, Jaipur 302021", city: "Jaipur", manager: "Deepak Rathore", phone: "+91 94140 78901", studentCount: 980, facultyCount: 6, batchCount: 4, revenue: 2340000, collectionRatio: 86.9, enrollmentRate: 71, image: "https://picsum.photos/seed/branch-jaipur/800/400" },
+];
+
+// ---- ANALYTICS DATA ----
+
+export const scoreProgressionData = [
+  { month: "Oct 2025", physics: 58, chemistry: 52, mathematics: 55, overall: 55 },
+  { month: "Nov 2025", physics: 62, chemistry: 55, mathematics: 58, overall: 58.3 },
+  { month: "Dec 2025", physics: 65, chemistry: 60, mathematics: 62, overall: 62.3 },
+  { month: "Jan 2026", physics: 70, chemistry: 62, mathematics: 65, overall: 65.7 },
+  { month: "Feb 2026", physics: 72, chemistry: 64, mathematics: 68, overall: 68 },
+  { month: "Mar 2026", physics: 76, chemistry: 72, mathematics: 70, overall: 72.7 },
+];
+
+export const topicHeatmapData = [
+  { topic: "Kinematics", subject: "Physics", score: 92, level: "strong" },
+  { topic: "Laws of Motion", subject: "Physics", score: 88, level: "strong" },
+  { topic: "Rotational Motion", subject: "Physics", score: 78, level: "moderate" },
+  { topic: "Electrostatics", subject: "Physics", score: 65, level: "weak" },
+  { topic: "Modern Physics", subject: "Physics", score: 58, level: "weak" },
+  { topic: "Atomic Structure", subject: "Chemistry", score: 85, level: "strong" },
+  { topic: "Chemical Bonding", subject: "Chemistry", score: 70, level: "moderate" },
+  { topic: "Thermodynamics", subject: "Chemistry", score: 62, level: "weak" },
+  { topic: "Organic — Hydrocarbons", subject: "Chemistry", score: 75, level: "moderate" },
+  { topic: "Quadratic Equations", subject: "Mathematics", score: 90, level: "strong" },
+  { topic: "Trigonometry", subject: "Mathematics", score: 82, level: "strong" },
+  { topic: "Coordinate Geometry", subject: "Mathematics", score: 72, level: "moderate" },
+  { topic: "Calculus", subject: "Mathematics", score: 68, level: "weak" },
+];
+
+export const revenueData = [
+  { month: "Oct 2025", collected: 2180000, due: 2450000, newEnrollments: 145 },
+  { month: "Nov 2025", collected: 1950000, due: 2100000, newEnrollments: 98 },
+  { month: "Dec 2025", collected: 2340000, due: 2600000, newEnrollments: 112 },
+  { month: "Jan 2026", collected: 3120000, due: 3400000, newEnrollments: 210 },
+  { month: "Feb 2026", collected: 2870000, due: 3100000, newEnrollments: 167 },
+  { month: "Mar 2026", collected: 2650000, due: 2900000, newEnrollments: 143 },
+];
+
+export const leadFunnelData = [
+  { stage: "New Leads", count: 342, color: "#3b82f6" },
+  { stage: "Contacted", count: 256, color: "#60a5fa" },
+  { stage: "Demo Booked", count: 178, color: "#93c5fd" },
+  { stage: "Demo Done", count: 134, color: "#f59e0b" },
+  { stage: "Enrolled", count: 89, color: "#22c55e" },
+  { stage: "Lost", count: 53, color: "#ef4444" },
+];
+
+// ---- TEACHER DATA ----
+
+export const teacherSchedule: ScheduleItem[] = [
+  { id: "ts-1", type: "Live Class", title: "Rotational Motion — Angular Momentum", subject: "Physics", faculty: "Dr. Anil Verma", time: "6:30 AM", duration: "90 min", batch: "JEE Adv — Morning", room: "Hall A", status: "Completed" },
+  { id: "ts-2", type: "Live Class", title: "Electrostatics — Capacitors", subject: "Physics", faculty: "Dr. Anil Verma", time: "8:15 AM", duration: "75 min", batch: "JEE Main — Online", room: "Online Studio", status: "Completed" },
+  { id: "ts-3", type: "Doubt Session", title: "Physics Doubt Clearing (Open)", subject: "Physics", faculty: "Dr. Anil Verma", time: "10:30 AM", duration: "60 min", batch: "All Batches", room: "Room 201", status: "Live", meetLink: "#" },
+  { id: "ts-4", type: "Live Class", title: "Waves — Standing Waves & Resonance", subject: "Physics", faculty: "Dr. Anil Verma", time: "2:00 PM", duration: "90 min", batch: "JEE Adv — Evening", room: "Hall B", status: "Upcoming" },
+  { id: "ts-5", type: "Test", title: "Review: Rotational Motion Test Papers", subject: "Physics", faculty: "Dr. Anil Verma", time: "4:30 PM", duration: "45 min", batch: "JEE Adv — Morning", room: "Staff Room", status: "Upcoming" },
+];
+
+export const teacherDoubts: Doubt[] = [
+  { id: "td-1", studentName: "Arjun Mehta", studentAvatar: "https://picsum.photos/seed/arjun-m/200/200", subject: "Physics", chapter: "Rotational Motion", question: "How do I find the moment of inertia of a hollow sphere about a tangential axis using the parallel axis theorem?", status: "Submitted", createdAt: new Date("2026-03-28T10:45:00"), assignedTo: "Dr. Anil Verma", priority: "High" },
+  { id: "td-2", studentName: "Priya Sharma", studentAvatar: "https://picsum.photos/seed/priya-sh/200/200", subject: "Physics", chapter: "Electrostatics", question: "In the derivation of electric field due to a uniformly charged ring, why do we only consider the axial component?", status: "Submitted", createdAt: new Date("2026-03-28T09:30:00"), assignedTo: "Dr. Anil Verma", priority: "Medium" },
+  { id: "td-3", studentName: "Rohit Gupta", studentAvatar: "https://picsum.photos/seed/rohit-g/200/200", subject: "Physics", chapter: "Waves", question: "I'm confused about the difference between phase velocity and group velocity. Can you explain with a JEE-level example?", status: "In Progress", createdAt: new Date("2026-03-27T16:00:00"), assignedTo: "Dr. Anil Verma", priority: "Low", image: "https://picsum.photos/seed/doubt-waves/400/300" },
+  { id: "td-4", studentName: "Vikram Reddy", studentAvatar: "https://picsum.photos/seed/vikram-r/200/200", subject: "Physics", chapter: "Mechanics", question: "For the problem where a block slides on a wedge placed on a frictionless surface — how do I set up the constraint equations?", status: "Submitted", createdAt: new Date("2026-03-28T08:00:00"), assignedTo: "Dr. Anil Verma", priority: "High", image: "https://picsum.photos/seed/doubt-mech/400/300" },
+  { id: "td-5", studentName: "Ananya Patel", studentAvatar: "https://picsum.photos/seed/ananya-p/200/200", subject: "Physics", chapter: "Rotational Motion", question: "Why is the angular momentum conserved when there's no external torque, but energy is not conserved in an inelastic collision?", status: "Resolved", createdAt: new Date("2026-03-26T14:00:00"), resolvedAt: new Date("2026-03-26T17:30:00"), assignedTo: "Dr. Anil Verma", priority: "Medium" },
+];
+
+// ---- PARENT DATA ----
+
+export const parentChildData = {
+  student: currentStudent,
+  todayAttendance: { present: true, classes: ["Physics", "Chemistry", "Mathematics"], absent: [] as string[] },
+  weeklyReport: {
+    attendance: 87.5,
+    testsAttempted: 3,
+    avgScore: 74.2,
+    assignmentsSubmitted: 4,
+    assignmentsPending: 1,
+    doubtsRaised: 3,
+    doubtsResolved: 2,
+    studyHours: 38.5,
+  },
+  recentScores: [
+    { test: "JEE Main Mock #14", score: 218, total: 300, date: "Mar 25" },
+    { test: "Physics — Rotational Motion", score: 48, total: 60, date: "Mar 22" },
+    { test: "Weekly Test #38", score: 112, total: 150, date: "Mar 20" },
+    { test: "Chemistry — Chemical Bonding", score: 34, total: 50, date: "Mar 17" },
+  ],
+  nextFee: { amount: 68750, dueDate: "2026-04-05", status: "Pending" as const },
+  upcomingPTM: { date: "2026-04-12", time: "10:00 AM", faculty: "Dr. Anil Verma", mode: "Offline" as const },
+};
